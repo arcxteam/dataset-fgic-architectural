@@ -1,0 +1,23 @@
+# Environment & secrets
+.env
+env.txt
+
+# Logs
+pexels_scraping.log
+*.log
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+dist/
+build/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/

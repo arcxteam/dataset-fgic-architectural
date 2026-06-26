@@ -1,0 +1,129 @@
+{
+  "dataset_name": "World Architecture Classification",
+  "description": "World architectural building image dataset for CNN classification, source Pexels.com",
+  "output_dir": "dataset",
+  "target_per_class": 1680,
+  "total_target": 13440,
+  "split_ratio": {
+    "train": 0.80,
+    "val": 0.10,
+    "test": 0.10
+  },
+  "random_seed": 42,
+  "compression": {
+    "max_kb": 200,
+    "max_dimension": 720,
+    "min_dimension": 200,
+    "quality_start": 85,
+    "quality_min": 40,
+    "quality_step": 5
+  },
+  "quality_filters": {
+    "min_width": 150,
+    "min_height": 150,
+    "max_aspect_ratio": 3.5,
+    "min_aspect_ratio": 0.28,
+    "min_color_std": 10.0,
+    "min_file_kb": 5,
+    "max_file_kb": 4096
+  },
+  "scraping": {
+    "api_per_page": 80,
+    "api_max_pages": 100,
+    "api_delay_seconds": 0.7,
+    "download_workers": 12,
+    "download_timeout_seconds": 15,
+    "brightdata_max_scrolls": 80,
+    "brightdata_stale_limit": 5,
+    "brightdata_scroll_delay": 1.5,
+    "orientations": ["landscape", "portrait"],
+    "skip_url_patterns": [
+      "logo", "avatar", "profile", "icon", "1x1", "sprite", "drawing", "people", "ai", "unreal",
+      "badge", "button", "pixel", "tracking", "emoji", "favicon", "text", "illustration"
+    ],
+    "skip_extensions": [".svg", ".gif", ".webm", ".mp4", ".ico"]
+  },
+  "perceptual_dedup": {
+    "enabled": true,
+    "hash_size": 16,
+    "threshold": 8
+  },
+  "classes": [
+    {
+      "name": "stadium",
+      "keywords": [
+        "stadium design",
+        "football stadium",
+        "arena stadium",
+        "stadium at night",
+        "stadium architecture"
+      ]
+    },
+    {
+      "name": "bridge",
+      "keywords": [
+        "bridge",
+        "bridge architecture",
+        "bridge landscape",
+        "bridge building",
+        "bridge at night"
+      ]
+    },
+    {
+      "name": "castle",
+      "keywords": [
+        "castle architecture",
+        "medieval castle",
+        "castle building",
+        "european castle"
+      ]
+    },
+    {
+      "name": "mosque",
+      "keywords": [
+        "islamic mosque",
+        "mosque architecture",
+        "mosque exterior",
+        "beautiful mosque"
+      ]
+    },
+    {
+      "name": "skyscraper",
+      "keywords": [
+        "skyscraper architecture",
+        "skyscraper building",
+        "tall building",
+        "city skyline",
+        "skyscraper at night"
+      ]
+    },
+    {
+      "name": "temple",
+      "keywords": [
+        "temple building",
+        "temple architecture",
+        "buddhist temple",
+        "ancient temple",
+        "temple at night"
+      ]
+    },
+    {
+      "name": "barn",
+      "keywords": [
+        "old wooden barn",
+        "barn homes",
+        "barn architecture",
+        "red barn"
+      ]
+    },
+    {
+      "name": "windmill",
+      "keywords": [
+        "windmill architecture",
+        "traditional windmill",
+        "tower mill",
+        "dutch windmill"
+      ]
+    }
+  ]
+}
