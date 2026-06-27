@@ -1,11 +1,21 @@
-# World Architectural Buildings Dataset (FGIC) for Multi‑Class Image Classification
+<p align="center">
+  <h1 align="center">World Architectural Buildings Dataset (FGIC) for Multi‑Class Image Classification</h1>
+</p>
 
-![Dataset Banner](https://huggingface.co/datasets/0xgr3y/arch-building-dataset/resolve/main/greyscope-labs-architecture-buildings-dataset.jpg)
+<p align="center">
+  <img src="https://huggingface.co/datasets/0xgr3y/arch-building-dataset/resolve/main/greyscope-labs-architecture-buildings-dataset.jpg" alt="Dataset Banner" width="100%">
+</p>
 
-[![License: CC BY 4.0](https://img.shields.io/badge/License-CC%20BY%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by/4.0/)
-[![HuggingFace Dataset](https://img.shields.io/badge/HuggingFace-0xgr3y%2Farch--building--dataset-yellow)](https://huggingface.co/datasets/0xgr3y/arch-building-dataset)
-[![Model Training](https://img.shields.io/badge/Model-0xgr3y%2FArch--Building--Image--Classification-blue)](https://huggingface.co/0xgr3y/Arch-Building-Image-Classification)
-[![Live Demo](https://img.shields.io/badge/Live%20Demo-HuggingFace%20Space-green)](https://huggingface.co/spaces/0xgr3y/arch-building-classifier)
+<center>
+
+[![License: CC BY 4.0](https://img.shields.io/badge/License-CC%20BY%204.0-orange?logo=creativecommons)](https://creativecommons.org/licenses/by/4.0/)
+[![HuggingFace Dataset](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fhuggingface.co%2Fapi%2Fdatasets%2F0xgr3y%2Farch-building-dataset&query=%24.downloads&label=HuggingFace%20Dataset&color=yellow&logo=huggingface&suffix=%20Download)](https://huggingface.co/datasets/0xgr3y/arch-building-dataset)
+[![HuggingFace Model](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fhuggingface.co%2Fapi%2Fmodels%2F0xgr3y%2FArch-Building-Image-Classification&query=%24.downloads&label=HuggingFace%20Model&color=blue&logo=huggingface&suffix=%20Download)](https://huggingface.co/0xgr3y/Arch-Building-Image-Classification)
+[![Live Hugging Space](https://img.shields.io/badge/Live%20Demo-HuggingFace%20Space-green?logo=huggingface)](https://huggingface.co/spaces/0xgr3y/arch-building-classifier)
+
+</center>
+
+---
 
 A balanced, multi-class image classification dataset of world architectural buildings — 13,440 images across 8 classes, sourced from Pexels with dual deduplication (SHA256 + pHash).
 
@@ -14,7 +24,7 @@ A balanced, multi-class image classification dataset of world architectural buil
 | Attribute | Value |
 |-----------|-------|
 | **Curated by** | Saugani |
-| **Homepage** | [Greyscope Labs](https://greyscope.xyz) |
+| **Homepage** | https://greyscope.xyz [Greyscope Labs]
 | **License** | [CC-BY-4.0](https://creativecommons.org/licenses/by/4.0/) (Pexels License — free for commercial use, no attribution required) |
 | **Size** | 13,440 images |
 | **Classes** | 8 (balanced, 1,680 per class) |
@@ -353,7 +363,7 @@ dataset = datasets.ImageFolder("dataset/", transform=transform)
 
 > Saugani. (2026). *World Architectural Buildings Dataset (FGIC) for Multi-Class Image Classification* [Dataset]. GitHub. https://github.com/arcxteam/dataset-fgic-architectural
 
-### BibTeX — GitHub (this repository)
+### BibTeX — GitHub
 
 ```bibtex
 @misc{saugani2026_arch_building_dataset_github,
@@ -366,7 +376,7 @@ dataset = datasets.ImageFolder("dataset/", transform=transform)
 }
 ```
 
-### BibTeX — HuggingFace (mirror with DOI)
+### BibTeX — HuggingFace w/ DOI
 
 ```bibtex
 @misc{saugani2026_arch_building_dataset_hf,
