@@ -1,9 +1,9 @@
 <p align="center">
-  <h1 align="center">World Architectural Buildings Dataset (FGIC) for Multi‑Class Image Classification</h1>
+  <img src="https://huggingface.co/datasets/0xgr3y/arch-building-dataset/resolve/main/greyscope-labs-architecture-buildings-dataset.jpg" alt="Dataset Banner" width="100%">
 </p>
 
 <p align="center">
-  <img src="https://huggingface.co/datasets/0xgr3y/arch-building-dataset/resolve/main/greyscope-labs-architecture-buildings-dataset.jpg" alt="Dataset Banner" width="100%">
+  <h1 align="center">World Architectural Buildings Dataset (FGIC) for Multi‑Class Image Classification</h1>
 </p>
 
 <center>
@@ -11,20 +11,20 @@
 [![License: CC BY 4.0](https://img.shields.io/badge/License-CC%20BY%204.0-orange?logo=creativecommons)](https://creativecommons.org/licenses/by/4.0/)
 [![HuggingFace Dataset](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fhuggingface.co%2Fapi%2Fdatasets%2F0xgr3y%2Farch-building-dataset&query=%24.downloads&label=HuggingFace%20Dataset&color=yellow&logo=huggingface&suffix=%20Download)](https://huggingface.co/datasets/0xgr3y/arch-building-dataset)
 [![HuggingFace Model](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fhuggingface.co%2Fapi%2Fmodels%2F0xgr3y%2FArch-Building-Image-Classification&query=%24.downloads&label=HuggingFace%20Model&color=blue&logo=huggingface&suffix=%20Download)](https://huggingface.co/0xgr3y/Arch-Building-Image-Classification)
-[![Live Hugging Space](https://img.shields.io/badge/Live%20Demo-HuggingFace%20Space-green?logo=huggingface)](https://huggingface.co/spaces/0xgr3y/arch-building-classifier)
+[![Live Hugging Spaces](https://img.shields.io/badge/HuggingFace%20Live-%20Spaces-green?logo=huggingface)](https://huggingface.co/spaces/0xgr3y/arch-building-classifier)
 
 </center>
 
 ---
 
-A balanced, multi-class image classification dataset of world architectural buildings — 13,440 images across 8 classes, sourced from Pexels with dual deduplication (SHA256 + pHash).
+A balanced, multi-class image classification dataset of world architectural buildings — 13,440 images across 8 classes, sourced from Pexels with dual deduplication (SHA256 + pHash + Human-in-the loop).
 
 ## Dataset Description
 
 | Attribute | Value |
 |-----------|-------|
 | **Curated by** | Saugani |
-| **Homepage** | https://greyscope.xyz [Greyscope Labs]
+| **Homepage** | https://greyscope.xyz (Greyscope Labs)
 | **License** | [CC-BY-4.0](https://creativecommons.org/licenses/by/4.0/) (Pexels License — free for commercial use, no attribution required) |
 | **Size** | 13,440 images |
 | **Classes** | 8 (balanced, 1,680 per class) |
@@ -60,7 +60,7 @@ All images sourced from **[Pexels.com](https://www.pexels.com)** — a free stoc
 
 ### Collection Pipeline — Multi-Mode Scraping Cascade
 
-Images were collected using `pexels_scraper.py` with a three-mode architecture and automatic fallback:
+Images were collected using `app_pexels.py` with a three-mode architecture and automatic fallback:
 
 **Mode 1 — Pexels API Key (primary):**
 - REST API `https://api.pexels.com/v1/search` per developer documentation
@@ -70,10 +70,9 @@ Images were collected using `pexels_scraper.py` with a three-mode architecture a
 - `X-Ratelimit-Remaining` header monitored to avoid rate limit exceeded
 
 **Mode 2 — BrightData (supplementary):**
-- `ChromiumRemoteConnection` from [BrightData](https://brightdata.com) Web Access APIs with proxy
+- `ChromiumRemoteConnection` from `https://brightdata.com` SDK Web Access APIs with proxy
 - Scrolls Pexels search pages until no new content (max 80 scrolls)
 - Extracts photo IDs from `a[href*='/photo/']` links, constructs medium-resolution image URLs
-- Premium account (paid)
 
 **Mode 3 — Selenium (fallback):**
 - Headless Chrome local as last resort if Mode 1 and Mode 2 fail
@@ -126,10 +125,10 @@ Keyword → [Pexels API: landscape + portrait (2 orientations)]
 
 | Method | Threshold | Purpose | Artifact |
 |--------|-----------|---------|----------|
-| **pHash** (perceptual hash, 16×16) | Distance ≤ 8 | Remove near-duplicate images (visual similarity) | `pexels_scraper.py` — implementation; `pexels_checkpoint.json` — hash records |
-| **SHA256** | Exact match | Remove byte-identical duplicates | `pexels_scraper.py` — implementation; `pexels_checkpoint.json` — hash records |
-| **Search Keywords** | Per-class | Keyword-driven collection with class-specific queries | `config_images.json` — keyword config; `pexels_scraper.py` — scraper script |
-| **Collection Checkpoint** | Per-batch | Resume-capable checkpoint tracking per class — prevents re-downloading across sessions | `pexels_checkpoint.json` — checkpoint data; `pexels_scraper.py` — checkpoint logic |
+| **pHash** (perceptual hash, 16×16) | Distance ≤ 8 | Remove near-duplicate images (visual similarity) | `app_pexels.py` — implementation; `pexels_checkpoint.json` — hash records |
+| **SHA256** | Exact match | Remove byte-identical duplicates | `app_pexels.py` — implementation; `pexels_checkpoint.json` — hash records |
+| **Search Keywords** | Per-class | Keyword-driven collection with class-specific queries | `config_images.json` — keyword config; `app_pexels.py` — scraper script |
+| **Collection Checkpoint** | Per-batch | Resume-capable checkpoint tracking per class — prevents re-downloading across sessions | `pexels_checkpoint.json` — checkpoint data; `app_pexels.py` — checkpoint logic |
 | **Human Curation** | Full review | Final visual annotation and selection by domain expert | — |
 
 ### Resolution Distribution
@@ -221,38 +220,38 @@ All configuration is controlled by `config_images.json` — edit this file to ch
 
 ```bash
 # Scrape full dataset (target: 1,680 images per class, total 13,440)
-python3 pexels_scraper.py
+python3 app_pexels.py
 
 # View dataset statistics
-python3 pexels_scraper.py --stats
+python3 app_pexels.py --stats
 
 # Recompress all images (re-apply compression to existing files)
-python3 pexels_scraper.py --recompress
+python3 app_pexels.py --recompress
 
 # Preview visual duplicates without deleting (dry run)
-python3 pexels_scraper.py --dedup --dry-run
+python3 app_pexels.py --dedup --dry-run
 
 # Remove visual duplicates (pHash, threshold=8)
-python3 pexels_scraper.py --dedup
+python3 app_pexels.py --dedup
 ```
 
 ### Scraper Features
 
-- ✅ 8 architectural classes with 2–5 search keywords per class (`config_images.json`)
-- ✅ Real-time perceptual deduplication during download — each image checked against pHash (threshold=8) within same class
-- ✅ Post-process deduplication via `--dedup` CLI flag for cross-class cleanup
-- ✅ SHA256 hash deduplication (cross-class and cross-source) — prevents identical files
-- ✅ Adaptive JPEG compression to target <200 KB (quality 85→40, step 5)
-- ✅ Max dimension 720px resize with `Image.Resampling.LANCZOS`
-- ✅ Quality validation: minimum file size, aspect ratio, color diversity
-- ✅ Post-dedup auto-repair — renumbers files sequentially, rebuilds checkpoint from disk
-- ✅ `rebuild_checkpoint_from_disk()` — reads entire `dataset/` and writes fresh checkpoint
-- ✅ `renumber_files()` — sequential renaming without gaps after deletion (two-phase rename)
-- ✅ Incremental scraping — resumes from existing dataset (reads hash + pHash from checkpoint)
-- ✅ Thread-safe — `threading.Lock` for counter, hash set, and pHash synchronization
-- ✅ Automatic checkpoint per keyword (`pexels_checkpoint.json`) — stores SHA256 + pHash
-- ✅ Signal handling `SIGTERM/SIGINT` and invalid URL filtering (logos, avatars, icons, SVG, GIF, video, etc.)
-- ✅ Interactive CLI with `--stats`, `--recompress`, `--dedup --dry-run`, `--dedup`
+- [x] 8 architectural classes with 2–5 search keywords per class (`config_images.json`)
+- [x] Real-time perceptual deduplication during download — each image checked against pHash (threshold=8) within same class
+- [x] Post-process deduplication via `--dedup` CLI flag for cross-class cleanup
+- [x] SHA256 hash deduplication (cross-class and cross-source) — prevents identical files
+- [x] Adaptive JPEG compression to target <200 KB (quality 85→40, step 5)
+- [x] Max dimension 720px resize with `Image.Resampling.LANCZOS`
+- [x] Quality validation: minimum file size, aspect ratio, color diversity
+- [x] Post-dedup auto-repair — renumbers files sequentially, rebuilds checkpoint from disk
+- [x] `rebuild_checkpoint_from_disk()` — reads entire `dataset/` and writes fresh checkpoint
+- [x] `renumber_files()` — sequential renaming without gaps after deletion (two-phase rename)
+- [x] Incremental scraping — resumes from existing dataset (reads hash + pHash from checkpoint)
+- [x] Thread-safe — `threading.Lock` for counter, hash set, and pHash synchronization
+- [x] Automatic checkpoint per keyword (`pexels_checkpoint.json`) — stores SHA256 + pHash
+- [x] Signal handling `SIGTERM/SIGINT` and invalid URL filtering (logos, avatars, icons, SVG, GIF, video, etc.)
+- [x] Interactive CLI with `--stats`, `--recompress`, `--dedup --dry-run`, `--dedup`
 
 ### How to Extend the Dataset
 
@@ -266,7 +265,7 @@ python3 pexels_scraper.py --dedup
 
 2. Run scraper:
    ```bash
-   python3 pexels_scraper.py 2500
+   python3 app_pexels.py 2500
    ```
 
 3. Behind the scenes:
@@ -344,7 +343,7 @@ dataset = datasets.ImageFolder("dataset/", transform=transform)
 | File | Description |
 |------|-------------|
 | `dataset/` | 13,440 images (8 classes × 1,680, JPEG format) |
-| `pexels_scraper.py` | Multi-mode scraper (Pexels API + BrightData + Selenium) |
+| `app_pexels.py` | Multi-mode scraper (Pexels API + BrightData + Selenium) |
 | `config_images.json` | Scraping configuration (classes, keywords, parameters, dedup) |
 | `pexels_checkpoint.json` | SHA256 + pHash checkpoint for resume-capable scraping |
 | `requirements.txt` | Python dependencies |
@@ -361,7 +360,9 @@ dataset = datasets.ImageFolder("dataset/", transform=transform)
 
 ### APA (7th Edition)
 
-> Saugani. (2026). *World Architectural Buildings Dataset (FGIC) for Multi-Class Image Classification* [Dataset]. GitHub. https://github.com/arcxteam/dataset-fgic-architectural
+```bibtex
+Saugani. (2026). World Architectural Buildings Dataset (FGIC) for Multi-Class Image Classification [Dataset]. GitHub. https://github.com/arcxteam/dataset-fgic-architectural
+```
 
 ### BibTeX — GitHub
 
