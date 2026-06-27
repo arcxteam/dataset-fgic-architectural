@@ -4,11 +4,11 @@ Pexels Image Scraper — config-driven, 3-mode cascade with perceptual dedup.
 Config: config_images.json | Keys: .env | Output: dataset/<class>/
 
 CLI:
-  python pexels_scraper.py [N]            # scrape N/class + recompress
-  python pexels_scraper.py --recompress   # recompress only
-  python pexels_scraper.py --stats        # dataset stats
-  python pexels_scraper.py --dedup        # remove visual dupes
-  python pexels_scraper.py --dedup --dry-run
+  python app_pexels.py [N]            # scrape N/class + recompress
+  python app_pexels.py --recompress   # recompress only
+  python app_pexels.py --stats        # dataset stats
+  python app_pexels.py --dedup        # remove visual dupes
+  python app_pexels.py --dedup --dry-run
 """
 
 from __future__ import annotations
@@ -354,7 +354,7 @@ class PexelsScraper:
         except Exception:
             pass
 
-    # --- checkpoint ---
+    # ====== checkpoint ======
 
     def _parse_idx(self, fn: str, cls_name: str) -> int:
         base = fn.replace(f"{cls_name}_", "").rsplit(".", 1)[0]
@@ -516,7 +516,7 @@ class PexelsScraper:
             self.log(f"  {cls_name}: {len(files)} files, {len(rename_map)} renamed")
         self.log(f"Renumbering complete: {total} renamed")
 
-    # --- search: unified selenium ---
+    # ====== search: unified selenium ======
 
     def _selenium_search(self, driver, search_url: str, max_scrolls: int,
                          selector: str, extract_fn, stale_limit: int = 5,
@@ -578,7 +578,7 @@ class PexelsScraper:
             clean += ".jpeg"
         return clean
 
-    # --- mode 1: pexels api ---
+    # ====== mode 1: pexels api ======
 
     def api_search(self, query: str, orientation: str = "landscape") -> List[str]:
         urls = []
@@ -628,7 +628,7 @@ class PexelsScraper:
                 break
         return urls
 
-    # --- mode 2: bright data selenium ---
+    # ====== mode 2: bright data selenium ======
 
     def init_brightdata(self):
         if not self.cfg.brightdata_auth:
@@ -681,7 +681,7 @@ class PexelsScraper:
             self.init_brightdata()
         return urls
 
-    # --- mode 3: local selenium ---
+    # ====== mode 3: local selenium ======
 
     def local_selenium_search(self, search_url: str, max_scrolls: int = 15) -> List[str]:
         try:
@@ -708,7 +708,7 @@ class PexelsScraper:
             self.log(f"    Local Selenium error: {e}")
             return []
 
-    # --- download ---
+    # ====== download ======
 
     def download_batch(self, urls: List[str], save_dir: Path, cls_name: str, src: str):
         random.shuffle(urls)
@@ -797,7 +797,7 @@ class PexelsScraper:
         self.log(f"[{cls_name}] DONE — {self.stats.get(cls_name, 0)}/{self.cfg.target_per_class}")
         self.checkpoint()
 
-    # --- recompress ---
+    # ====== recompress ======
 
     def recompress_raw(self):
         self.log("Re-compressing all raw images...")
@@ -824,7 +824,7 @@ class PexelsScraper:
             self.log(f"  {cls_name}: {count}/{len(files)} recompressed | "
                      f"{total_orig/1024/1024:.1f} → {total_new/1024/1024:.1f} MB")
 
-    # --- dedup ---
+    # ====== dedup ======
 
     def perceptual_dedup(self, dry_run: bool = False):
         ih = self._lazy_imagehash()
@@ -883,7 +883,7 @@ class PexelsScraper:
             self.renumber_files()
             self.rebuild_checkpoint_from_disk()
 
-    # --- stats ---
+    # ====== stats ======
 
     def print_summary(self):
         total = sum(self.stats.values())
@@ -944,7 +944,7 @@ class PexelsScraper:
         print(f"\n  TOTAL: {total} images, {len(self.cfg.classes)} classes")
         print("=" * 60)
 
-    # --- main ---
+    # ====== main ======
 
     def run(self):
         self.log("=" * 60)
